@@ -3,4 +3,6 @@ export interface TaskType {
   id: number;
   title: string;
   completed: boolean;
+  assignedTo: string;
+  dueIn: string;
 }
