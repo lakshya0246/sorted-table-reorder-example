@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { TableSort } from './table.types';
 
 @Pipe({
   name: 'sort',
@@ -10,9 +11,8 @@ export class SortPipe implements PipeTransform {
   transform(
     value: any[] | null,
     sortByKey: string,
-    sortDirection: 'ASC' | 'DESC' | undefined
+    sortDirection: TableSort
   ): any[] | null {
-    console.log(value);
     if (
       sortDirection &&
       value?.length &&

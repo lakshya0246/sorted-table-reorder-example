@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { fetchTasks } from '../task.actions';
 import { TaskType } from '../task.model';
 import { DataService } from './data.service';
+import { TableSort } from './table.types';
 
 @Component({
   selector: 'awesome-table',
@@ -13,7 +13,7 @@ import { DataService } from './data.service';
 })
 export class TableComponent implements OnInit {
   tasks$: Observable<TaskType[]> = this.store.select((state) => state.tasks);
-  sort: 'ASC' | 'DESC' | undefined = undefined;
+  sort: TableSort = undefined;
   constructor(
     private data: DataService,
     private store: Store<{ tasks: TaskType[] }>
