@@ -1,16 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Task } from './table.types';
+import { Observable, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { TaskType } from '../task.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  public fetchTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>('https://jsonplaceholder.typicode.com/todos');
+  public fetchTasks(): Observable<TaskType[]> {
+    return timer(3000).pipe(
+      switchMap((_) =>
+        this.http.get<TaskType[]>('https://jsonplaceholder.typicode.com/todos')
+      )
+    );
   }
 }
