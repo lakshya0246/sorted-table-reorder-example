@@ -1,1 +1,4 @@
-<p *ngFor="let task of tasks$ | async">{{task.title}}{{task.userId}}</p>
+<button (click)="sort ='ASC'">Sort up</button>
+<button (click)="sort ='DESC'">Sort down</button>
+<button (click)="sort = undefined">Clear</button>
+<p *ngFor="let task of tasks$ | async | sort:'title':sort">{{task.title}}{{task.userId}}</p>

@@ -10,9 +10,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { tasksReducer } from './task.reducer';
 import { TaskEffects } from './task-effects';
 import { EffectsModule } from '@ngrx/effects';
+import { SortPipe } from './table/sort.pipe';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent],
+  declarations: [AppComponent, TableComponent, SortPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
