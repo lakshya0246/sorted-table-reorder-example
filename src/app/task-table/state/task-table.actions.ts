@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { TaskType } from './task.model';
+import { TaskType } from '../task.model';
 
 export const fetchTasks = createAction('[Tasks] Fetch');
 

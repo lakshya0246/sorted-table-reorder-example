@@ -1,20 +1,18 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { TableComponent } from './table/table.component';
-import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { TaskEffects } from './task-table/task-effects';
-import { EffectsModule } from '@ngrx/effects';
-import { SortPipe } from './table/sort.pipe';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { SortPipe } from './table/pipes/sort.pipe';
+import { TableComponent } from './table/table.component';
 import { TaskTableComponent } from './task-table/task-table.component';
 import { TaskTableModule } from './task-table/task-table.module';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent, SortPipe, TaskTableComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

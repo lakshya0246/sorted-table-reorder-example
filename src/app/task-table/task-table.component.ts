@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { TableSort } from '../table/table.types';
-import { fetchTasks } from './task.actions';
+import { TaskTableActions } from './state';
 
 @Component({
   selector: 'task-table',
@@ -14,6 +13,6 @@ export class TaskTableComponent implements OnInit {
   constructor(private store: Store<{ tasks: TaskType[] }>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(fetchTasks());
+    this.store.dispatch(TaskTableActions.fetchTasks());
   }
 }

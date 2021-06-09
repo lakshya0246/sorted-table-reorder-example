@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TableSort } from './table.types';
+import { TableSort } from '../table.types';
 
 @Pipe({
   name: 'sort',
