@@ -4,14 +4,26 @@ import { TableState } from '../table.types';
 
 export const TABLE_REDUCER_IDENTIFIER = 'table';
 export const INITIAL_STATE: TableState = {
+  searchString: '',
   sort: {
     columnAccessor: '',
     sortDirection: undefined,
   },
 };
 
-export const tableSortReducer = createReducer(
+export const tableReducer = createReducer(
   INITIAL_STATE,
+  // Search
+  on(TableActions.filterBySearch, (state, action) => ({
+    ...state,
+    searchString: action.searchString,
+  })),
+  on(TableActions.clearSearch, (state, action) => ({
+    ...state,
+    searchString: INITIAL_STATE.searchString,
+  })),
+
+  // Sort
   on(TableActions.sortColumn, (state, action) => ({ ...state, sort: action })),
   on(TableActions.clearSorting, (state, action) => ({
     ...state,

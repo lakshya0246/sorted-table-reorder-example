@@ -15,7 +15,8 @@ import { TaskType } from './task.model';
   styleUrls: ['./task-table.component.scss'],
 })
 export class TaskTableComponent implements OnInit {
-  tableColums = TASK_TABLE_COLUMNS;
+  readonly TABLE_COLUMNS = TASK_TABLE_COLUMNS;
+  readonly COLUMN_ACCESSORS = TASK_TABLE_COLUMNS_ACCESSORS;
   tasksAsTableData$: Observable<any[]> = this.store
     .select((state) => state.tasks)
     .pipe(

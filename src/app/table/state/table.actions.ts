@@ -7,3 +7,10 @@ export const sortColumn = createAction(
 );
 
 export const clearSorting = createAction('[Table] Clear Sorting');
+
+export const filterBySearch = createAction(
+  '[Table] Filter by Search',
+  props<{ searchString: string }>()
+);
+
+export const clearSearch = createAction('[Table] Clear Search');

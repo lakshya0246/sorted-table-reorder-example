@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { SearchPipe } from './pipes/search.pipe';
 import { SortPipe } from './pipes/sort.pipe';
@@ -10,9 +11,10 @@ import { TableComponent } from './table.component';
   declarations: [SortPipe, TableComponent, SearchPipe],
   imports: [
     CommonModule,
+    FormsModule,
     StoreModule.forFeature(
       TABLE_REDUCER_IDENTIFIER,
-      TableReducers.tableSortReducer
+      TableReducers.tableReducer
     ),
   ],
   exports: [TableComponent],

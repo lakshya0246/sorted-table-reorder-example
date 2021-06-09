@@ -7,6 +7,7 @@ export interface TableSortState {
 
 export interface TableState {
   sort: TableSortState;
+  searchString: string;
 }
 
 export interface TableColumn {
