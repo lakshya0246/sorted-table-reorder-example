@@ -1,14 +1,22 @@
 <div>
     <input isClearable (onClear)="clearSearch()" [ngModel]="searchString$ | async" (ngModelChange)="search($event)" />
 </div>
-<span *ngFor="let column of columns">
-    {{column.name}}
-    <button (click)="sortColumn('ASC', column.accessor)">Sort up</button>
-    <button (click)="sortColumn('DESC', column.accessor)">Sort down</button>
-    <button (click)="clearSorting()">Clear</button>
-</span>
-<p *ngFor="let datum of data | sort:(sortConfig$ | async) | search:(searchString$ | async):searchByFields">
-    <span *ngFor="let column of columns">
-        {{datum[column.accessor]}}
-    </span>
-</p>
+<table>
+    <thead>
+        <th *ngFor="let column of columns">
+            {{column.name}}
+            <button (click)="sortColumn('ASC', column.accessor)">Sort up</button>
+            <button (click)="sortColumn('DESC', column.accessor)">Sort down</button>
+            <button (click)="clearSorting()">Clear</button>
+        </th>
+    </thead>
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+        <tr cdkDrag
+            *ngFor="let datum of data | sort:(sortConfig$ | async) | search:(searchString$ | async):searchByFields">
+
+            <td *ngFor="let column of columns">
+                {{datum[column.accessor]}}
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -7,11 +7,13 @@ import { SearchPipe } from './pipes/search.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { TableReducers, TABLE_REDUCER_IDENTIFIER } from './state';
 import { TableComponent } from './table.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [SortPipe, TableComponent, SearchPipe, ClearableInputDirective],
   imports: [
     CommonModule,
+    DragDropModule,
     FormsModule,
     StoreModule.forFeature(
       TABLE_REDUCER_IDENTIFIER,

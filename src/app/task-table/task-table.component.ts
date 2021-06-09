@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -35,5 +36,14 @@ export class TaskTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(TaskTableActions.fetchTasks());
+  }
+
+  reorderData(event: CdkDragDrop<any[]>): void {
+    this.store.dispatch(
+      TaskTableActions.reorderTasks({
+        previousIndex: event.previousIndex,
+        currentIndex: event.currentIndex,
+      })
+    );
   }
 }

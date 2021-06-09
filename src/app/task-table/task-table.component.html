@@ -1,2 +1,3 @@
-<awesome-table [searchByFields]="[COLUMN_ACCESSORS.TITLE,COLUMN_ACCESSORS.ASSIGNED_TO]" [columns]='TABLE_COLUMNS'
+<awesome-table (reorderRows)="reorderData($event)"
+    [searchByFields]="[COLUMN_ACCESSORS.TITLE,COLUMN_ACCESSORS.ASSIGNED_TO]" [columns]='TABLE_COLUMNS'
     [data]="tasksAsTableData$ | async"></awesome-table>

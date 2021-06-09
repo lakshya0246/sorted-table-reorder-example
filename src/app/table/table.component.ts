@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AppState } from '../app.model';
 import { TableActions } from './state';
 import { TableColumn, TableSort, TableSortState } from './table.types';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'awesome-table',
@@ -26,6 +27,7 @@ export class TableComponent implements OnInit {
   @Input() columns: TableColumn[] = [];
   @Input() data: any[] | null = [];
   @Input() searchByFields: string[] = [];
+  @Output() reorderRows = new EventEmitter<CdkDragDrop<any[]>>();
 
   constructor(private store: Store<AppState>) {
     this.searchEventsSubscription = this.debouncedSearchEvents$.subscribe(
@@ -51,6 +53,10 @@ export class TableComponent implements OnInit {
     this.store.dispatch(
       TableActions.sortColumn({ sortDirection: sort, columnAccessor })
     );
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    this.reorderRows.emit(event);
   }
 
   clearSorting() {

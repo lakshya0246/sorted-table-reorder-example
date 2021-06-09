@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { createAction, props } from '@ngrx/store';
 import { TableSortState } from '../table.types';
 
