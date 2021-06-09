@@ -6,7 +6,7 @@
         <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="searchString$ | async"
             (ngModelChange)="search($event)" />
     </div>
-    <table>
+    <table class='table'>
         <thead>
             <th *ngFor="let column of columns">
                 {{column.name}}
@@ -16,6 +16,7 @@
             </th>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+            <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
             <tr cdkDrag
                 *ngFor="let datum of data | sort:(sortConfig$ | async) | search:(searchString$ | async):searchByFields">
 

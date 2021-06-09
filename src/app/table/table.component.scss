@@ -57,6 +57,90 @@
     }
 }
 
+.cdk-drag-placeholder {
+    opacity: 0.3;
+}
+.cdk-drag-preview {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: 1px 1px 14px 0px rgba(0, 0, 0, 0.12), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    transform: translate3d(-1px, -1px, 0);
+    background: white;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 2fr 0.5fr 0.5fr;
+
+    // TODO: convert to mixin
+    & td {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 36px;
+        background: white;
+        font-size: 14px;
+        font-weight: 500;
+        color: $grey-7;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-right: 8px;
+    }
+
+    & td:first-child {
+        border-radius: 8px 0 0 8px;
+        padding-left: 16px;
+    }
+    & td:last-child {
+        margin-right: 0;
+        border-radius: 0 8px 8px 0;
+        padding-right: 16px;
+    }
+}
+
+table.table {
+    position: relative;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+
+    & tr {
+        cursor: pointer;
+        margin: 12px 0;
+        transition: transform 200ms, box-shadow 200ms;
+        transition-timing-function: ease-out;
+        box-shadow: none;
+        transform-origin: center;
+        border-radius: 8px;
+
+        &:hover {
+            box-shadow: 1px 1px 14px 0px rgba(0, 0, 0, 0.12), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+            transform: translate3d(-1px, -1px, 0);
+        }
+
+        & td {
+            height: 36px;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+            color: $grey-7;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding-right: 8px;
+        }
+
+        & td:first-child {
+            border-radius: 8px 0 0 8px;
+            padding-left: 16px;
+        }
+        & td:last-child {
+            margin-right: 0;
+            border-radius: 0 8px 8px 0;
+            padding-right: 16px;
+        }
+    }
+}
 .table-container {
     h1.table-title {
         font-size: 40px;
