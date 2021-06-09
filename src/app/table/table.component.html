@@ -7,10 +7,11 @@
     </div>
     <table class="table" *ngIf="sortConfig$ | async as sortConfig">
         <thead>
+            <th></th>
             <th *ngFor="let column of columns">
                 <div class="header-cell-content">
                     {{ column.name }}
-                    <button class="sort-toggle" [ngClass]="{
+                    <button title="Sort {{column.name}}" class="sort-toggle" [ngClass]="{
               'sort-asc':
                 sortConfig.columnAccessor === column.accessor &&
                 sortConfig.sortDirection === 'ASC',
@@ -21,13 +22,23 @@
                 </div>
             </th>
         </thead>
-        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+        <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)">
             <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
             <tr cdkDrag *ngFor="
           let datum of data
             | sort: sortConfig
             | search: (searchString$ | async):searchByFields
         ">
+                <td cdkDragHandle>
+                    <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="1.5" cy="1.5" r="1.5" fill="currentColor" />
+                        <circle cx="7.5" cy="1.5" r="1.5" fill="currentColor" />
+                        <circle cx="1.5" cy="6.5" r="1.5" fill="currentColor" />
+                        <circle cx="7.5" cy="6.5" r="1.5" fill="currentColor" />
+                        <circle cx="1.5" cy="11.5" r="1.5" fill="currentColor" />
+                        <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor" />
+                    </svg>
+                </td>
                 <td *ngFor="let column of columns">
                     {{ datum[column.accessor] }}
                 </td>

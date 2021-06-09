@@ -70,7 +70,7 @@
     background: white;
     overflow: hidden;
     display: grid;
-    grid-template-columns: 2fr 0.5fr 0.5fr;
+    grid-template-columns: 0.25fr 2fr 0.5fr 0.5fr;
 
     // TODO: convert to mixin
     & td {
@@ -96,6 +96,18 @@
         margin-right: 0;
         border-radius: 0 8px 8px 0;
         padding-right: 16px;
+    }
+}
+
+.cdk-drag-handle {
+    cursor: move;
+    svg {
+        color: $grey-2;
+    }
+    &:hover {
+        svg {
+            color: $grey-3;
+        }
     }
 }
 
@@ -127,10 +139,10 @@ table.table {
                 -moz-appearance: none;
             }
             button.sort-toggle.sort-asc {
-                background: linear-gradient(180deg, #ff8400 0%, #ff8400 50%, $grey-15 50%);
+                background: linear-gradient(180deg, $hot-orange 0%, $hot-orange 50%, $grey-15 50%);
             }
             button.sort-toggle.sort-desc {
-                background: linear-gradient(0deg, #ff8400 0%, #ff8400 50%, $grey-15 50%);
+                background: linear-gradient(0deg, $hot-orange 0%, $hot-orange 50%, $grey-15 50%);
             }
         }
         & th:first-child {
@@ -139,7 +151,6 @@ table.table {
     }
 
     & tr {
-        cursor: pointer;
         margin: 12px 0;
         transition: transform 200ms, box-shadow 200ms;
         transition-timing-function: ease-out;
