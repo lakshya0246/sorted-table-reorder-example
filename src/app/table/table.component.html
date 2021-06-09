@@ -1,4 +1,4 @@
-<button (click)="sort ='ASC'">Sort up</button>
-<button (click)="sort ='DESC'">Sort down</button>
-<button (click)="sort = undefined">Clear</button>
-<p *ngFor="let task of data | sort:'title':sort">{{task.title}} | {{task.assignedTo}} | {{task.dueIn}}</p>
+<button (click)="sortColumn('ASC')">Sort up</button>
+<button (click)="sortColumn('DESC')">Sort down</button>
+<button (click)="clearSorting()">Clear</button>
+<p *ngFor="let task of data | sort:'title':(sort$ | async)">{{task.title}} | {{task.assignedTo}} | {{task.dueIn}}</p>

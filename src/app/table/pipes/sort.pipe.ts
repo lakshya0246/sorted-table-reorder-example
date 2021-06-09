@@ -11,7 +11,7 @@ export class SortPipe implements PipeTransform {
   transform(
     value: any[] | null,
     sortByKey: string,
-    sortDirection: TableSort
+    sortDirection: TableSort | null
   ): any[] | null {
     if (
       sortDirection &&
