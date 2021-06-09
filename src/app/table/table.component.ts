@@ -56,6 +56,18 @@ export class TableComponent implements OnInit {
     );
   }
 
+  toggleSort(columnAccessor: string, previousSort: TableSortState) {
+    if (previousSort.columnAccessor === columnAccessor) {
+      if (previousSort.sortDirection === 'DESC') {
+        this.clearSorting();
+      } else {
+        this.sortColumn('DESC', columnAccessor);
+      }
+      return;
+    }
+    this.sortColumn('ASC', columnAccessor);
+  }
+
   drop(event: CdkDragDrop<any[]>) {
     this.reorderRows.emit(event);
   }
