@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { DataService } from './table/data.service';
+import { TaskTableDataService } from './task-table-data.service';
 import * as TaskActions from './task.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskEffects {
-  constructor(private actions$: Actions, private data: DataService) {}
+  constructor(private actions$: Actions, private data: TaskTableDataService) {}
   fetchTasks$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TaskActions.fetchTasks),

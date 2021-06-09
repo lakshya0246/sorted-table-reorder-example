@@ -7,19 +7,21 @@ import { TableComponent } from './table/table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { tasksReducer } from './task.reducer';
-import { TaskEffects } from './task-effects';
+import { TaskEffects } from './task-table/task-effects';
 import { EffectsModule } from '@ngrx/effects';
 import { SortPipe } from './table/sort.pipe';
+import { TaskTableComponent } from './task-table/task-table.component';
+import { TaskTableModule } from './task-table/task-table.module';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent, SortPipe],
+  declarations: [AppComponent, TableComponent, SortPipe, TaskTableComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({ tasks: tasksReducer }, {}),
-    EffectsModule.forRoot([TaskEffects]),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot(),
+    TaskTableModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
     }),

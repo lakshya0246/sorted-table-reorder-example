@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { TaskType } from '../task.model';
+import { TaskType } from './task.model';
 
 function getRandomDuration(): string {
   const random = Math.floor(Math.random() * 10);
@@ -16,7 +16,7 @@ function getRandomDuration(): string {
 @Injectable({
   providedIn: 'root',
 })
-export class DataService {
+export class TaskTableDataService {
   constructor(private http: HttpClient) {}
 
   public fetchTasks(): Observable<TaskType[]> {
