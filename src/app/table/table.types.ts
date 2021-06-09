@@ -8,3 +8,10 @@ export interface TableSortState {
 export interface TableState {
   sort: TableSortState;
 }
+
+export interface TableColumn {
+  name: string;
+  accessor: string;
+  sorting?: TableSort;
+  sortType?: 'alphanumeric' | 'datetime' | 'basic';
+}

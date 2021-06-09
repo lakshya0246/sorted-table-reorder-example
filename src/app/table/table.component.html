@@ -1,4 +1,8 @@
 <button (click)="sortColumn('ASC')">Sort up</button>
 <button (click)="sortColumn('DESC')">Sort down</button>
 <button (click)="clearSorting()">Clear</button>
-<p *ngFor="let task of data | sort:'title':(sort$ | async)">{{task.title}} | {{task.assignedTo}} | {{task.dueIn}}</p>
+<p *ngFor="let datum of data | sort:'title':(sort$ | async)">
+    <span *ngFor="let column of columns">
+        {{datum[column.accessor]}}
+    </span>
+</p>

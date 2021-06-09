@@ -3,7 +3,12 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../app.model';
 import { TableActions, TABLE_REDUCER_IDENTIFIER } from './state';
-import { TableSort, TableSortState, TableState } from './table.types';
+import {
+  TableColumn,
+  TableSort,
+  TableSortState,
+  TableState,
+} from './table.types';
 
 @Component({
   selector: 'awesome-table',
@@ -12,6 +17,7 @@ import { TableSort, TableSortState, TableState } from './table.types';
 })
 export class TableComponent implements OnInit {
   sort$: Observable<any> = this.store.select((state) => state.table.sort.sort);
+  @Input() columns: TableColumn[] = [];
   @Input() data: any[] | null = [];
 
   constructor(private store: Store<AppState>) {}
