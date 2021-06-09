@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TableSort } from '../table.types';
+import { TableSort, TableSortState } from '../table.types';
 
 @Pipe({
   name: 'sort',
@@ -10,19 +10,20 @@ import { TableSort } from '../table.types';
 export class SortPipe implements PipeTransform {
   transform(
     value: any[] | null,
-    sortByKey: string,
-    sortDirection: TableSort | null
+    sortConfig: TableSortState | null
   ): any[] | null {
     if (
-      sortDirection &&
+      sortConfig &&
       value?.length &&
-      typeof value[0][sortByKey] === 'string'
+      typeof value[0][sortConfig.columnAccessor] === 'string'
     ) {
       const sorted = [...value].sort((a, b) => {
-        return (a[sortByKey] as string).localeCompare(b[sortByKey] as string);
+        return (a[sortConfig.columnAccessor] as string).localeCompare(
+          b[sortConfig.columnAccessor] as string
+        );
       });
 
-      if (sortDirection === 'DESC') return sorted.reverse();
+      if (sortConfig.sortDirection === 'DESC') return sorted.reverse();
       return sorted;
     }
     return value;

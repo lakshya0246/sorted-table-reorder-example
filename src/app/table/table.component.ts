@@ -1,14 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppState } from '../app.model';
-import { TableActions, TABLE_REDUCER_IDENTIFIER } from './state';
-import {
-  TableColumn,
-  TableSort,
-  TableSortState,
-  TableState,
-} from './table.types';
+import { TableActions } from './state';
+import { TableColumn, TableSort } from './table.types';
 
 @Component({
   selector: 'awesome-table',
@@ -16,7 +11,7 @@ import {
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  sort$: Observable<any> = this.store.select((state) => state.table.sort.sort);
+  sortConfig$: Observable<any> = this.store.select((state) => state.table.sort);
   @Input() columns: TableColumn[] = [];
   @Input() data: any[] | null = [];
 
@@ -24,9 +19,9 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  sortColumn(sort: TableSort) {
+  sortColumn(sort: TableSort, columnAccessor: string) {
     this.store.dispatch(
-      TableActions.sortColumn({ sort, columnAccessor: 'hey' })
+      TableActions.sortColumn({ sortDirection: sort, columnAccessor })
     );
   }
   clearSorting() {

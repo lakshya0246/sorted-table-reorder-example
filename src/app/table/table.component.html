@@ -1,7 +1,10 @@
-<button (click)="sortColumn('ASC')">Sort up</button>
-<button (click)="sortColumn('DESC')">Sort down</button>
-<button (click)="clearSorting()">Clear</button>
-<p *ngFor="let datum of data | sort:'title':(sort$ | async)">
+<span *ngFor="let column of columns">
+    {{column.name}}
+    <button (click)="sortColumn('ASC', column.accessor)">Sort up</button>
+    <button (click)="sortColumn('DESC', column.accessor)">Sort down</button>
+    <button (click)="clearSorting()">Clear</button>
+</span>
+<p *ngFor="let datum of data | sort:(sortConfig$ | async)">
     <span *ngFor="let column of columns">
         {{datum[column.accessor]}}
     </span>

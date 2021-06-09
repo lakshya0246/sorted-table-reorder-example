@@ -6,7 +6,7 @@ export const TABLE_REDUCER_IDENTIFIER = 'table';
 export const INITIAL_STATE: TableState = {
   sort: {
     columnAccessor: '',
-    sort: undefined,
+    sortDirection: undefined,
   },
 };
 

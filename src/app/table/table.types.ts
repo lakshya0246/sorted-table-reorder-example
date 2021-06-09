@@ -2,7 +2,7 @@ export type TableSort = 'ASC' | 'DESC' | undefined;
 
 export interface TableSortState {
   columnAccessor: string;
-  sort: TableSort;
+  sortDirection: TableSort;
 }
 
 export interface TableState {
@@ -12,6 +12,5 @@ export interface TableState {
 export interface TableColumn {
   name: string;
   accessor: string;
-  sorting?: TableSort;
-  sortType?: 'alphanumeric' | 'datetime' | 'basic';
+  sortType: 'alphanumeric' | 'datetime';
 }
