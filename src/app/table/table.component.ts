@@ -40,7 +40,6 @@ export class TableComponent implements OnInit {
   }
 
   search(searchString: any) {
-    console.log(searchString);
     this.searchEventsSubject.next(searchString);
   }
 
