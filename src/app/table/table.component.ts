@@ -4,7 +4,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AppState } from '../app.model';
 import { TableActions } from './state';
-import { TableColumn, TableSort } from './table.types';
+import { TableColumn, TableSort, TableSortState } from './table.types';
 
 @Component({
   selector: 'awesome-table',
@@ -12,19 +12,23 @@ import { TableColumn, TableSort } from './table.types';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  sortConfig$: Observable<any> = this.store.select((state) => state.table.sort);
+  sortConfig$: Observable<TableSortState> = this.store.select(
+    (state) => state.table.sort
+  );
   private searchEventsSubject = new Subject<string>();
-  searchEvents$ = this.searchEventsSubject
+  debouncedSearchEvents$ = this.searchEventsSubject
     .asObservable()
     .pipe(debounceTime(200));
   private searchEventsSubscription: Subscription;
-  searchString: string = '';
+  searchString$: Observable<string> = this.store.select(
+    (state) => state.table.searchString
+  );
   @Input() columns: TableColumn[] = [];
   @Input() data: any[] | null = [];
   @Input() searchByFields: string[] = [];
 
   constructor(private store: Store<AppState>) {
-    this.searchEventsSubscription = this.searchEvents$.subscribe(
+    this.searchEventsSubscription = this.debouncedSearchEvents$.subscribe(
       (searchString) =>
         this.store.dispatch(TableActions.filterBySearch({ searchString }))
     );
@@ -36,7 +40,12 @@ export class TableComponent implements OnInit {
   }
 
   search(searchString: any) {
+    console.log(searchString);
     this.searchEventsSubject.next(searchString);
+  }
+
+  clearSearch() {
+    this.store.dispatch(TableActions.clearSearch());
   }
 
   sortColumn(sort: TableSort, columnAccessor: string) {

@@ -20,7 +20,7 @@ export const tableReducer = createReducer(
   })),
   on(TableActions.clearSearch, (state, action) => ({
     ...state,
-    searchString: INITIAL_STATE.searchString,
+    searchString: '',
   })),
 
   // Sort
