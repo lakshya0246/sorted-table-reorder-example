@@ -1,0 +1,76 @@
+@import "../../colors.scss";
+
+.search-container {
+    position: relative;
+    height: 44px;
+    width: 480px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+
+    & > input[type="text"] {
+        /* Normalize */
+        width: 100%;
+        appearance: none;
+        border: none;
+        height: 100%;
+
+        &:focus {
+            outline: none;
+        }
+
+        font-size: 16px;
+        height: 100%;
+        color: $grey-7;
+        padding: 10px 16px;
+
+        &::placeholder {
+            font-weight: 400;
+            color: $grey-2;
+        }
+    }
+
+    & > .search-icon,
+    & > .clear-btn {
+        position: absolute;
+        right: 12px;
+        opacity: 0.2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    & > .clear-btn {
+        cursor: pointer;
+        &:hover {
+            opacity: 0.4;
+        }
+    }
+
+    &:hover {
+        & > .search-icon,
+        & > .clear-btn {
+            opacity: 0.3;
+        }
+    }
+}
+
+.table-container {
+    h1.table-title {
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 48px;
+        color: $grey-3;
+    }
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 640px;
+
+    .search-container {
+        margin-bottom: 48px;
+    }
+}

@@ -25,6 +25,7 @@ export class TableComponent implements OnInit {
     (state) => state.table.searchString
   );
   @Input() columns: TableColumn[] = [];
+  @Input() title: string = '';
   @Input() data: any[] | null = [];
   @Input() searchByFields: string[] = [];
   @Output() reorderRows = new EventEmitter<CdkDragDrop<any[]>>();

@@ -1,22 +1,28 @@
-<div>
-    <input isClearable (onClear)="clearSearch()" [ngModel]="searchString$ | async" (ngModelChange)="search($event)" />
-</div>
-<table>
-    <thead>
-        <th *ngFor="let column of columns">
-            {{column.name}}
-            <button (click)="sortColumn('ASC', column.accessor)">Sort up</button>
-            <button (click)="sortColumn('DESC', column.accessor)">Sort down</button>
-            <button (click)="clearSorting()">Clear</button>
-        </th>
-    </thead>
-    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-        <tr cdkDrag
-            *ngFor="let datum of data | sort:(sortConfig$ | async) | search:(searchString$ | async):searchByFields">
+<div class='table-container'>
 
-            <td *ngFor="let column of columns">
-                {{datum[column.accessor]}}
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <h1 class='table-title'>{{title}}</h1>
+
+    <div class='search-container'>
+        <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="searchString$ | async"
+            (ngModelChange)="search($event)" />
+    </div>
+    <table>
+        <thead>
+            <th *ngFor="let column of columns">
+                {{column.name}}
+                <button (click)="sortColumn('ASC', column.accessor)">Sort up</button>
+                <button (click)="sortColumn('DESC', column.accessor)">Sort down</button>
+                <button (click)="clearSorting()">Clear</button>
+            </th>
+        </thead>
+        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+            <tr cdkDrag
+                *ngFor="let datum of data | sort:(sortConfig$ | async) | search:(searchString$ | async):searchByFields">
+
+                <td *ngFor="let column of columns">
+                    {{datum[column.accessor]}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
