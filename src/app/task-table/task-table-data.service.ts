@@ -24,21 +24,17 @@ export class TaskTableDataService {
   constructor(private http: HttpClient) {}
 
   public fetchTasks(): Observable<TaskType[]> {
-    return timer(200).pipe(
-      switchMap((_) =>
-        this.http
-          .get<TaskType[]>('https://jsonplaceholder.typicode.com/todos')
-          .pipe(
-            // Generate placeholder data
-            map((baseTasks) =>
-              baseTasks.map((baseTask) => ({
-                ...baseTask,
-                assignedTo: baseTask.title.split(' ')[1],
-                ...getRandomDuration(),
-              }))
-            )
-          )
-      )
-    );
+    return this.http
+      .get<TaskType[]>('https://jsonplaceholder.typicode.com/todos')
+      .pipe(
+        // Generate placeholder data
+        map((baseTasks) =>
+          baseTasks.map((baseTask) => ({
+            ...baseTask,
+            assignedTo: baseTask.title.split(' ')[1],
+            ...getRandomDuration(),
+          }))
+        )
+      );
   }
 }

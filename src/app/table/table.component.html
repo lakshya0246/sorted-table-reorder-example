@@ -1,17 +1,16 @@
-<div class="table-container">
-    <h1 class="table-title">{{ title }}</h1>
+<h1 class="table-title">{{ title }}</h1>
 
-    <div class="search-container">
-        <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="searchString$ | async"
-            (ngModelChange)="search($event)" />
-    </div>
-    <table class="table" *ngIf="sortState$ | async as sortState">
-        <thead class="table-header">
-            <th></th>
-            <th *ngFor="let column of columns">
-                <div class="header-cell-content">
-                    {{ column.name }}
-                    <button title="Sort {{column.name}}" class="sort-toggle" [ngClass]="{
+<div class="search-container">
+    <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="searchString$ | async"
+        (ngModelChange)="search($event)" />
+</div>
+<table class="table" *ngIf="sortState$ | async as sortState">
+    <thead class="table-header">
+        <th></th>
+        <th *ngFor="let column of columns">
+            <div class="header-cell-content">
+                {{ column.name }}
+                <button title="Sort {{column.name}}" class="sort-toggle" [ngClass]="{
               'sort-asc':
                 sortState.column.accessor === column.accessor &&
                 sortState.sortDirection === 'ASC',
@@ -19,31 +18,29 @@
                 sortState.column.accessor === column.accessor &&
                 sortState.sortDirection === 'DESC'
             }" (click)="toggleSort(column, sortState)"></button>
-                </div>
-            </th>
-        </thead>
-        <tbody cdkDropList cdkDropListLockAxis="y"
-            (cdkDropListDropped)="drop($event, {sort: sortState, searchString:''})">
-            <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
-            <tr class='table-row' cdkDrag *ngFor="
+            </div>
+        </th>
+    </thead>
+    <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event, {sort: sortState, searchString:''})">
+        <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
+        <tr class='table-row' cdkDrag *ngFor="
           let datum of data
             | sort: sortState
             | search: (searchString$ | async):searchByFields
         ">
-                <td cdkDragHandle>
-                    <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="1.5" cy="1.5" r="1.5" fill="currentColor" />
-                        <circle cx="7.5" cy="1.5" r="1.5" fill="currentColor" />
-                        <circle cx="1.5" cy="6.5" r="1.5" fill="currentColor" />
-                        <circle cx="7.5" cy="6.5" r="1.5" fill="currentColor" />
-                        <circle cx="1.5" cy="11.5" r="1.5" fill="currentColor" />
-                        <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor" />
-                    </svg>
-                </td>
-                <td *ngFor="let column of columns">
-                    {{ datum[column.accessor] }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <td cdkDragHandle>
+                <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="1.5" cy="1.5" r="1.5" fill="currentColor" />
+                    <circle cx="7.5" cy="1.5" r="1.5" fill="currentColor" />
+                    <circle cx="1.5" cy="6.5" r="1.5" fill="currentColor" />
+                    <circle cx="7.5" cy="6.5" r="1.5" fill="currentColor" />
+                    <circle cx="1.5" cy="11.5" r="1.5" fill="currentColor" />
+                    <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor" />
+                </svg>
+            </td>
+            <td *ngFor="let column of columns">
+                {{ datum[column.accessor] }}
+            </td>
+        </tr>
+    </tbody>
+</table>

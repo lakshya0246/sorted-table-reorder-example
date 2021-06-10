@@ -10,9 +10,10 @@ import { SortPipe } from './table/pipes/sort.pipe';
 import { TableComponent } from './table/table.component';
 import { TaskTableComponent } from './task-table/task-table.component';
 import { TaskTableModule } from './task-table/task-table.module';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ToastComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
