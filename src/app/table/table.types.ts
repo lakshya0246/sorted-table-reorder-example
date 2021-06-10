@@ -10,11 +10,19 @@ export interface TableState {
   searchString: string;
 }
 
-export interface TableColumn {
+export interface TableColumnBase {
   name: string;
   accessor: string;
-  sortType: 'alphanumeric' | 'datetime';
 }
+export interface TableColumnAlphanumeric extends TableColumnBase {
+  sortType: 'alphanumeric';
+}
+export interface TableColumnDatetime extends TableColumnBase {
+  sortType: 'datetime';
+  sortValueKey: string;
+}
+
+export type TableColumn = TableColumnDatetime | TableColumnAlphanumeric;
 
 export interface ReorderTableEvent {
   currentIndex: number;

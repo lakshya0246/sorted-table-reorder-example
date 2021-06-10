@@ -1,17 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { addDays } from 'date-fns';
 import { Observable, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TaskType } from './task.model';
 
-function getRandomDuration(): string {
+function getRandomDuration(): { dueAtDistance: string; dueAt: Date } {
   const random = Math.floor(Math.random() * 10);
   if (random === 0) {
-    return 'Today';
+    return { dueAtDistance: 'Today', dueAt: new Date() };
   } else if (random === 1) {
-    return 'Tomorrow';
+    return { dueAtDistance: 'Today', dueAt: addDays(new Date(), 1) };
   }
-  return `in ${random} days`;
+  return {
+    dueAtDistance: `in ${random} days`,
+    dueAt: addDays(new Date(), random),
+  };
 }
 @Injectable({
   providedIn: 'root',
@@ -30,7 +34,7 @@ export class TaskTableDataService {
               baseTasks.map((baseTask) => ({
                 ...baseTask,
                 assignedTo: baseTask.title.split(' ')[1],
-                dueIn: getRandomDuration(),
+                ...getRandomDuration(),
               }))
             )
           )

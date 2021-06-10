@@ -25,8 +25,9 @@ export class TaskTableComponent implements OnInit {
       map((tasks) =>
         tasks.map((_task: TaskType) => {
           return {
+            ..._task,
             [TASK_TABLE_COLUMNS_ACCESSORS.TITLE]: _task.title,
-            [TASK_TABLE_COLUMNS_ACCESSORS.DUE]: _task.dueIn,
+            [TASK_TABLE_COLUMNS_ACCESSORS.DUE_AT_DISTANCE]: _task.dueAtDistance,
             [TASK_TABLE_COLUMNS_ACCESSORS.ASSIGNED_TO]: _task.assignedTo,
           };
         })

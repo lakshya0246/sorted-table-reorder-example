@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TableSort, TableSortState } from '../table.types';
+import { TableColumnDatetime, TableSort, TableSortState } from '../table.types';
 
 /**
  * @returns -1 if `b` greater than `a`, 1 if `a` greater than `b`
@@ -27,6 +27,17 @@ function compareAlphanumeric(
   return sortDirection === 'DESC' ? comparison * -1 : comparison;
 }
 
+/**
+ * @returns -1 if `b` greater than `a`, 1 if `a` greater than `b`
+ */
+function compareDatetime(a: Date, b: Date, sortDirection: TableSort) {
+  let comparison = 0;
+  if (a instanceof Date && b instanceof Date) {
+    comparison = a.getTime() > b.getTime() ? -1 : 1;
+  }
+  return sortDirection === 'DESC' ? comparison * -1 : comparison;
+}
+
 @Pipe({
   name: 'sort',
 })
@@ -38,7 +49,6 @@ export class SortPipe implements PipeTransform {
     value: any[] | null,
     sortConfig: TableSortState | null
   ): any[] | null {
-    console.log(sortConfig);
     if (
       sortConfig?.column.accessor &&
       value?.length &&
@@ -53,10 +63,11 @@ export class SortPipe implements PipeTransform {
           )
         );
       } else if (sortConfig.column.sortType === 'datetime') {
+        const column: TableColumnDatetime = sortConfig.column;
         return [...value].sort((a, b) =>
-          compareAlphanumeric(
-            a[sortConfig.column.accessor],
-            b[sortConfig.column.accessor],
+          compareDatetime(
+            a[column.sortValueKey],
+            b[column.sortValueKey],
             sortConfig.sortDirection
           )
         );

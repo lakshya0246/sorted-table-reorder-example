@@ -4,5 +4,6 @@ export interface TaskType {
   title: string;
   completed: boolean;
   assignedTo: string;
-  dueIn: string;
+  dueAtDistance: string;
+  dueAt: Date;
 }
