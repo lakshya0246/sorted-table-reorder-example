@@ -21,7 +21,7 @@
             </div>
         </th>
     </thead>
-    <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event, {sort: sortState, searchString:''})">
+    <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)">
         <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
         <tr class='table-row' cdkDrag *ngFor="
           let datum of data

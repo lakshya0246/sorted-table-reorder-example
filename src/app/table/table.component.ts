@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, tap } from 'rxjs/operators';
 import { AppState } from '../app.model';
+import { UtilsActions } from '../utils-state';
 import { TableActions } from './state';
 import {
   ReorderTableEvent,
@@ -89,9 +90,24 @@ export class TableComponent implements OnInit, OnDestroy {
     this.sortColumn('ASC', column);
   }
 
-  drop(event: CdkDragDrop<any[]>, tableState: TableState) {
-    if (this.hasSearch || this.hasSorting) {
-      console.log('cannot ');
+  drop(event: CdkDragDrop<any[]>) {
+    if (this.hasSorting) {
+      this.store.dispatch(
+        UtilsActions.pushToast({
+          title: 'Cannot reorder when rows are sorted',
+          callbackTitle: 'Clear Sorting',
+          callback: () => this.store.dispatch(TableActions.clearSorting()),
+        })
+      );
+      return;
+    } else if (this.hasSearch) {
+      this.store.dispatch(
+        UtilsActions.pushToast({
+          title: 'Cannot reorder when rows are filtered by search',
+          callbackTitle: 'Clear Search',
+          callback: () => this.store.dispatch(TableActions.clearSearch()),
+        })
+      );
       return;
     }
     this.reorderRows.emit({

@@ -1,4 +1,6 @@
-<div class='toast'>
-    Hey
-    <button>Clear Search</button>
+<div class='toast-container'>
+    <div *ngFor="let toast of toasts$ | async" class='toast'>
+        {{toast.title}}
+        <button (click)="triggerCallback(toast)">{{toast.callbackTitle ? toast.callbackTitle : ''}}</button>
+    </div>
 </div>

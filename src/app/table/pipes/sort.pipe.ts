@@ -33,7 +33,7 @@ function compareAlphanumeric(
 function compareDatetime(a: Date, b: Date, sortDirection: TableSort) {
   let comparison = 0;
   if (a instanceof Date && b instanceof Date) {
-    comparison = a.getTime() > b.getTime() ? -1 : 1;
+    comparison = a.getTime() < b.getTime() ? -1 : 1;
   }
   return sortDirection === 'DESC' ? comparison * -1 : comparison;
 }

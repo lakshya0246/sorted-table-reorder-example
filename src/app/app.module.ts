@@ -11,6 +11,7 @@ import { TableComponent } from './table/table.component';
 import { TaskTableComponent } from './task-table/task-table.component';
 import { TaskTableModule } from './task-table/task-table.module';
 import { ToastComponent } from './toast/toast.component';
+import { UtilsReducers, UTILS_REDUCER_IDENTIFIER } from './utils-state';
 
 @NgModule({
   declarations: [AppComponent, ToastComponent],
@@ -18,7 +19,9 @@ import { ToastComponent } from './toast/toast.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({
+      [UTILS_REDUCER_IDENTIFIER]: UtilsReducers.utilsReducer,
+    }),
     EffectsModule.forRoot(),
     TaskTableModule,
     StoreDevtoolsModule.instrument({
