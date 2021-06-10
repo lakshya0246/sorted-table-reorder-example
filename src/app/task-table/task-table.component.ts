@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ReorderTableEvent } from '../table/table.types';
 import { TaskTableActions } from './state';
 import {
   TASK_TABLE_COLUMNS,
@@ -38,7 +39,7 @@ export class TaskTableComponent implements OnInit {
     this.store.dispatch(TaskTableActions.fetchTasks());
   }
 
-  reorderData(event: CdkDragDrop<any[]>): void {
+  reorderData(event: ReorderTableEvent): void {
     this.store.dispatch(
       TaskTableActions.reorderTasks({
         previousIndex: event.previousIndex,

@@ -15,3 +15,8 @@ export interface TableColumn {
   accessor: string;
   sortType: 'alphanumeric' | 'datetime';
 }
+
+export interface ReorderTableEvent {
+  currentIndex: number;
+  previousIndex: number;
+}

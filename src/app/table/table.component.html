@@ -6,7 +6,7 @@
             (ngModelChange)="search($event)" />
     </div>
     <table class="table" *ngIf="sortConfig$ | async as sortConfig">
-        <thead>
+        <thead class="table-header">
             <th></th>
             <th *ngFor="let column of columns">
                 <div class="header-cell-content">
@@ -24,7 +24,7 @@
         </thead>
         <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)">
             <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
-            <tr cdkDrag *ngFor="
+            <tr class='table-row' cdkDrag *ngFor="
           let datum of data
             | sort: sortConfig
             | search: (searchString$ | async):searchByFields
