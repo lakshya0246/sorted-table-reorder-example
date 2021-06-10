@@ -1,6 +1,6 @@
 # TableProject
 
-A simple table component with column sorting (alphanumeric and datetime) and search. Also supports drag and drop to reorganize data.
+A simple table component with column sorting (alphanumeric and datetime) and search. Also supports drag and drop, based on Angular CDK, to enable reorganization of data rows.
 
 ## Development server
 
