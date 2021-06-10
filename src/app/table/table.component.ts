@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, tap } from 'rxjs/operators';
 import { AppState } from '../app.model';
 import { TableActions } from './state';
 import {
@@ -17,6 +17,7 @@ import {
   TableColumn,
   TableSort,
   TableSortState,
+  TableState,
 } from './table.types';
 
 @Component({
@@ -25,23 +26,29 @@ import {
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, OnDestroy {
-  sortState$: Observable<TableSortState> = this.store.select(
-    (state) => state.table.sort
-  );
+  sortState$: Observable<TableSortState> = this.store
+    .select((state) => state.table.sort)
+    .pipe(
+      tap(
+        (sortState) => (this.hasSorting = sortState.sortDirection !== undefined)
+      )
+    );
   private searchEventsSubject = new Subject<string>();
   debouncedSearchEvents$ = this.searchEventsSubject
     .asObservable()
     .pipe(debounceTime(200));
   private searchEventsSubscription: Subscription;
-  searchString$: Observable<string> = this.store.select(
-    (state) => state.table.searchString
-  );
+  searchString$: Observable<string> = this.store
+    .select((state) => state.table.searchString)
+    .pipe(tap((searchString) => (this.hasSearch = searchString !== '')));
 
   @Input() columns: TableColumn[] = [];
   @Input() title: string = '';
   @Input() data: any[] | null = [];
   @Input() searchByFields: string[] = [];
   @Output() reorderRows = new EventEmitter<ReorderTableEvent>();
+  hasSearch: boolean = false;
+  hasSorting: boolean = false;
 
   constructor(private store: Store<AppState>) {
     this.searchEventsSubscription = this.debouncedSearchEvents$.subscribe(
@@ -82,15 +89,15 @@ export class TableComponent implements OnInit, OnDestroy {
     this.sortColumn('ASC', column);
   }
 
-  drop(event: CdkDragDrop<any[]>, sortState: TableSortState) {
-    if (sortState.sortDirection === undefined) {
-      this.reorderRows.emit({
-        previousIndex: event.previousIndex,
-        currentIndex: event.currentIndex,
-      });
-    } else {
+  drop(event: CdkDragDrop<any[]>, tableState: TableState) {
+    if (this.hasSearch || this.hasSorting) {
       console.log('cannot ');
+      return;
     }
+    this.reorderRows.emit({
+      previousIndex: event.previousIndex,
+      currentIndex: event.currentIndex,
+    });
   }
 
   clearSorting() {
