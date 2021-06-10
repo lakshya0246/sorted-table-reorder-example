@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { AppState } from '../app.model';
 import { UtilsActions } from '../utils-state';
-import { Toast, UtilsState } from '../utils-state/utils.model';
+import { Toast } from '../utils-state/utils.model';
 
 @Component({
   selector: 'burnt-toast',
@@ -14,13 +13,11 @@ import { Toast, UtilsState } from '../utils-state/utils.model';
 /**
  * Displays a list of toasts
  */
-export class ToastComponent implements OnInit {
+export class ToastComponent {
   toasts$: Observable<Toast[]> = this.store.select(
     (state) => state.utils.toasts
   );
   constructor(private store: Store<AppState>) {}
-
-  ngOnInit(): void {}
 
   triggerCallback(toast: Toast) {
     if (toast.callback) {
