@@ -42,7 +42,7 @@ function compareDatetime(a: Date, b: Date, sortDirection: TableSort) {
   name: 'sort',
 })
 /**
- * Only supports string sorting, not alphanumeric strings
+ * Sorts column based on its `sortType`
  */
 export class SortPipe implements PipeTransform {
   transform(

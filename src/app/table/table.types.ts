@@ -19,6 +19,9 @@ export interface TableColumnAlphanumeric extends TableColumnBase {
 }
 export interface TableColumnDatetime extends TableColumnBase {
   sortType: 'datetime';
+  /**
+   * Property key to use for sorting datetime column as opposed to `accessor` which is used for display values
+   */
   sortValueKey: string;
 }
 

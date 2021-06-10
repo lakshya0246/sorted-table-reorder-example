@@ -28,40 +28,63 @@ const SEARCH_ICON = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
   selector: '[isSearch]',
 })
 /**
- * Adds a clear button to the `el`
+ * Adds a clear button and search icon to the input
  */
 export class SearchInputDirective implements OnDestroy {
   @Output() onClear: EventEmitter<any> = new EventEmitter<any>();
 
-  closeButton: HTMLDivElement;
-  searchIcon: HTMLDivElement;
+  closeIconContainer: HTMLDivElement;
+  searchIconContainer: HTMLDivElement;
 
   constructor(el: ElementRef<HTMLInputElement>, private renderer: Renderer2) {
-    this.closeButton = this.renderer.createElement('div');
-    this.searchIcon = this.renderer.createElement('div');
-    this.closeButton.addEventListener('click', () => {
+    this.closeIconContainer = this.renderer.createElement('div');
+    this.searchIconContainer = this.renderer.createElement('div');
+    this.closeIconContainer.addEventListener('click', () => {
       this.onClear.emit();
-      this.closeButton.style.display = 'none';
-      this.searchIcon.style.display = 'flex';
+      this.closeIconContainer.style.display = 'none';
+      this.searchIconContainer.style.display = 'flex';
     });
-    this.closeButton.style.display = 'none';
-    this.renderer.addClass(this.closeButton, 'clear-btn');
-    this.renderer.addClass(this.searchIcon, 'search-icon');
-    this.renderer.setProperty(this.closeButton, 'innerHTML', X_CIRCLE_ICON);
-    this.renderer.setProperty(this.searchIcon, 'innerHTML', SEARCH_ICON);
-    this.renderer.appendChild(el.nativeElement.parentElement, this.closeButton);
-    this.renderer.appendChild(el.nativeElement.parentElement, this.searchIcon);
+    this.closeIconContainer.style.display = 'none';
+    this.renderer.addClass(this.closeIconContainer, 'clear-btn');
+    this.renderer.addClass(this.searchIconContainer, 'search-icon');
+    this.renderer.setProperty(
+      this.closeIconContainer,
+      'innerHTML',
+      X_CIRCLE_ICON
+    );
+    this.renderer.setProperty(
+      this.searchIconContainer,
+      'innerHTML',
+      SEARCH_ICON
+    );
+    this.renderer.appendChild(
+      el.nativeElement.parentElement,
+      this.closeIconContainer
+    );
+    this.renderer.appendChild(
+      el.nativeElement.parentElement,
+      this.searchIconContainer
+    );
   }
   @HostListener('input', ['$event.target.value']) onValueChange(value: string) {
     if (value === '') {
-      this.searchIcon.style.display = 'flex';
-      this.closeButton.style.display = 'none';
+      this.showEl(this.searchIconContainer);
+      this.hideEl(this.closeIconContainer);
     } else {
-      this.searchIcon.style.display = 'none';
-      this.closeButton.style.display = 'flex';
+      this.hideEl(this.searchIconContainer);
+      this.showEl(this.closeIconContainer);
     }
   }
+
+  hideEl(el: HTMLElement) {
+    this.renderer.setStyle(el, 'display', 'none');
+  }
+
+  showEl(el: HTMLElement) {
+    this.renderer.setStyle(el, 'display', 'flex');
+  }
+
   ngOnDestroy(): void {
-    this.closeButton.removeAllListeners?.('click');
+    this.closeIconContainer.removeAllListeners?.('click');
   }
 }

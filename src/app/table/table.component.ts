@@ -18,7 +18,6 @@ import {
   TableColumn,
   TableSort,
   TableSortState,
-  TableState,
 } from './table.types';
 
 @Component({
@@ -26,7 +25,7 @@ import {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnDestroy {
   sortState$: Observable<TableSortState> = this.store
     .select((state) => state.table.sort)
     .pipe(
@@ -34,22 +33,26 @@ export class TableComponent implements OnInit, OnDestroy {
         (sortState) => (this.hasSorting = sortState.sortDirection !== undefined)
       )
     );
-  private searchEventsSubject = new Subject<string>();
-  debouncedSearchEvents$ = this.searchEventsSubject
-    .asObservable()
-    .pipe(debounceTime(200));
-  private searchEventsSubscription: Subscription;
   searchString$: Observable<string> = this.store
     .select((state) => state.table.searchString)
     .pipe(tap((searchString) => (this.hasSearch = searchString !== '')));
 
-  @Input() columns: TableColumn[] = [];
+  private hasSearch: boolean = false;
+  private hasSorting: boolean = false;
+  private searchEventsSubject = new Subject<string>();
+  private debouncedSearchEvents$ = this.searchEventsSubject
+    .asObservable()
+    .pipe(debounceTime(200));
+  private searchEventsSubscription: Subscription;
+
   @Input() title: string = '';
   @Input() data: any[] | null = [];
+  /**
+   * Object properties/Column accessors to look for while searching
+   */
+  @Input() columns: TableColumn[] = [];
   @Input() searchByFields: string[] = [];
   @Output() reorderRows = new EventEmitter<ReorderTableEvent>();
-  hasSearch: boolean = false;
-  hasSorting: boolean = false;
 
   constructor(private store: Store<AppState>) {
     this.searchEventsSubscription = this.debouncedSearchEvents$.subscribe(
@@ -58,13 +61,11 @@ export class TableComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
     this.searchEventsSubscription.unsubscribe();
   }
 
-  search(searchString: any) {
+  search(searchString: string) {
     this.searchEventsSubject.next(searchString);
   }
 
@@ -78,6 +79,9 @@ export class TableComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Cycles through sort states
+   */
   toggleSort(column: TableColumn, previousSort: TableSortState) {
     if (previousSort.column.accessor === column.accessor) {
       if (previousSort.sortDirection === 'DESC') {
@@ -90,7 +94,11 @@ export class TableComponent implements OnInit, OnDestroy {
     this.sortColumn('ASC', column);
   }
 
-  drop(event: CdkDragDrop<any[]>) {
+  clearSorting() {
+    this.store.dispatch(TableActions.clearSorting());
+  }
+
+  dropRow(event: CdkDragDrop<any[]>) {
     if (this.hasSorting) {
       this.store.dispatch(
         UtilsActions.pushToast({
@@ -114,9 +122,5 @@ export class TableComponent implements OnInit, OnDestroy {
       previousIndex: event.previousIndex,
       currentIndex: event.currentIndex,
     });
-  }
-
-  clearSorting() {
-    this.store.dispatch(TableActions.clearSorting());
   }
 }

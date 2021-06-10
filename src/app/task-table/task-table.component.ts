@@ -40,7 +40,7 @@ export class TaskTableComponent implements OnInit {
     this.store.dispatch(TaskTableActions.fetchTasks());
   }
 
-  reorderData(event: ReorderTableEvent): void {
+  reorderRows(event: ReorderTableEvent): void {
     this.store.dispatch(
       TaskTableActions.reorderTasks({
         previousIndex: event.previousIndex,

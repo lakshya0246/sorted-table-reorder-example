@@ -3,6 +3,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'search',
 })
+/**
+ * Filters `list` by search string
+ * @param searchByFields list of object property names/`keys` to search in
+ */
 export class SearchPipe implements PipeTransform {
   transform(
     list: any[] | null,

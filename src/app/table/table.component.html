@@ -4,9 +4,12 @@
     <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="searchString$ | async"
         (ngModelChange)="search($event)" />
 </div>
+
 <table class="table" *ngIf="sortState$ | async as sortState">
     <thead class="table-header">
+        <!-- First column for drag handle -->
         <th></th>
+
         <th *ngFor="let column of columns">
             <div class="header-cell-content">
                 {{ column.name }}
@@ -21,7 +24,8 @@
             </div>
         </th>
     </thead>
-    <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)">
+
+    <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropRow($event)">
         <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
         <tr class='table-row' cdkDrag *ngFor="
           let datum of data

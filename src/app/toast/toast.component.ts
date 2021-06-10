@@ -11,6 +11,9 @@ import { Toast, UtilsState } from '../utils-state/utils.model';
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
 })
+/**
+ * Displays a list of toasts
+ */
 export class ToastComponent implements OnInit {
   toasts$: Observable<Toast[]> = this.store.select(
     (state) => state.utils.toasts
