@@ -1,12 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
 import { TableActions } from '.';
-import { TableState } from '../table.types';
+import { TableColumn, TableState } from '../table.types';
 
 export const TABLE_REDUCER_IDENTIFIER = 'table';
+const INIT_TABLE_COLUMN: TableColumn = {
+  name: '',
+  accessor: '',
+  sortType: 'alphanumeric',
+};
+
 export const INITIAL_STATE: TableState = {
   searchString: '',
   sort: {
-    columnAccessor: '',
+    column: INIT_TABLE_COLUMN,
     sortDirection: undefined,
   },
 };

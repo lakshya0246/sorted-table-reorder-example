@@ -1,7 +1,7 @@
 export type TableSort = 'ASC' | 'DESC' | undefined;
 
 export interface TableSortState {
-  columnAccessor: string;
+  column: TableColumn;
   sortDirection: TableSort;
 }
 

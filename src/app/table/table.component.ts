@@ -25,7 +25,7 @@ import {
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, OnDestroy {
-  sortConfig$: Observable<TableSortState> = this.store.select(
+  sortState$: Observable<TableSortState> = this.store.select(
     (state) => state.table.sort
   );
   private searchEventsSubject = new Subject<string>();
@@ -64,29 +64,33 @@ export class TableComponent implements OnInit, OnDestroy {
     this.store.dispatch(TableActions.clearSearch());
   }
 
-  sortColumn(sort: TableSort, columnAccessor: string) {
+  sortColumn(sort: TableSort, column: TableColumn) {
     this.store.dispatch(
-      TableActions.sortColumn({ sortDirection: sort, columnAccessor })
+      TableActions.sortColumn({ sortDirection: sort, column })
     );
   }
 
-  toggleSort(columnAccessor: string, previousSort: TableSortState) {
-    if (previousSort.columnAccessor === columnAccessor) {
+  toggleSort(column: TableColumn, previousSort: TableSortState) {
+    if (previousSort.column.accessor === column.accessor) {
       if (previousSort.sortDirection === 'DESC') {
         this.clearSorting();
       } else {
-        this.sortColumn('DESC', columnAccessor);
+        this.sortColumn('DESC', column);
       }
       return;
     }
-    this.sortColumn('ASC', columnAccessor);
+    this.sortColumn('ASC', column);
   }
 
-  drop(event: CdkDragDrop<any[]>) {
-    this.reorderRows.emit({
-      previousIndex: event.previousIndex,
-      currentIndex: event.currentIndex,
-    });
+  drop(event: CdkDragDrop<any[]>, sortState: TableSortState) {
+    if (sortState.sortDirection === undefined) {
+      this.reorderRows.emit({
+        previousIndex: event.previousIndex,
+        currentIndex: event.currentIndex,
+      });
+    } else {
+      console.log('cannot ');
+    }
   }
 
   clearSorting() {

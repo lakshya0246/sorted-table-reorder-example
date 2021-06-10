@@ -5,7 +5,7 @@
         <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="searchString$ | async"
             (ngModelChange)="search($event)" />
     </div>
-    <table class="table" *ngIf="sortConfig$ | async as sortConfig">
+    <table class="table" *ngIf="sortState$ | async as sortState">
         <thead class="table-header">
             <th></th>
             <th *ngFor="let column of columns">
@@ -13,20 +13,20 @@
                     {{ column.name }}
                     <button title="Sort {{column.name}}" class="sort-toggle" [ngClass]="{
               'sort-asc':
-                sortConfig.columnAccessor === column.accessor &&
-                sortConfig.sortDirection === 'ASC',
+                sortState.column.accessor === column.accessor &&
+                sortState.sortDirection === 'ASC',
               'sort-desc':
-                sortConfig.columnAccessor === column.accessor &&
-                sortConfig.sortDirection === 'DESC'
-            }" (click)="toggleSort(column.accessor, sortConfig)"></button>
+                sortState.column.accessor === column.accessor &&
+                sortState.sortDirection === 'DESC'
+            }" (click)="toggleSort(column, sortState)"></button>
                 </div>
             </th>
         </thead>
-        <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)">
+        <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event, sortState)">
             <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
             <tr class='table-row' cdkDrag *ngFor="
           let datum of data
-            | sort: sortConfig
+            | sort: sortState
             | search: (searchString$ | async):searchByFields
         ">
                 <td cdkDragHandle>

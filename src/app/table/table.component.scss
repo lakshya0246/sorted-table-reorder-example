@@ -3,7 +3,8 @@
 .search-container {
     position: relative;
     height: 44px;
-    width: 480px;
+    width: 100%;
+    max-width: 480px;
     display: flex;
     align-items: center;
     background: white;
@@ -192,8 +193,8 @@ table.table {
 }
 
 :host {
+    padding: 12px;
     h1.table-title {
-        margin: 0 12px 48px 12px;
         font-size: 40px;
         font-weight: 400;
         line-height: 48px;
@@ -206,12 +207,7 @@ table.table {
     max-width: 700px;
     width: 100%;
 
-    table {
-        padding: 0 12px;
-    }
-
     .search-container {
-        margin-left: 12px;
         margin-bottom: 48px;
     }
 }
