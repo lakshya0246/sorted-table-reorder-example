@@ -1,4 +1,14 @@
-@import "../../colors.scss";
+@import "src/colors.scss";
+
+.tags-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    removable-tag {
+        margin: 0 4px 4px 0;
+    }
+}
 
 .search-container {
     position: relative;
@@ -199,6 +209,10 @@ table.table {
         font-weight: 400;
         line-height: 48px;
         color: $grey-3;
+    }
+
+    .tags-container {
+        margin-bottom: 16px;
     }
 
     display: flex;

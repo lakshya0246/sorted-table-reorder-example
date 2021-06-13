@@ -5,6 +5,10 @@
         (ngModelChange)="search($event)" />
 </div>
 
+<div class='tags-container'>
+    <removable-tag close="" title='Custom ordering applied'></removable-tag>
+</div>
+
 <table class="table" *ngIf="sortState$ | async as sortState">
     <thead class="table-header">
         <!-- First column for drag handle -->
