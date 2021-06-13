@@ -1,53 +1,55 @@
 <h1 class="table-title">{{ title }}</h1>
 
-<div class="search-container">
-    <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="searchString$ | async"
-        (ngModelChange)="search($event)" />
-</div>
+<ng-container *ngIf="tableState$ | async as tableState">
+    <div class="search-container">
+        <input type="text" placeholder="Search" isSearch (onClear)="clearSearch()" [ngModel]="tableState.searchString"
+            (ngModelChange)="search($event)" />
+    </div>
 
-<div class='tags-container'>
-    <removable-tag close="" title='Custom ordering applied'></removable-tag>
-</div>
+    <div *ngIf="tableState.sort.customSorting.applied === true" class='tags-container'>
+        <removable-tag (remove)="clearCustomSorting()" title='Custom ordering applied'></removable-tag>
+    </div>
 
-<table class="table" *ngIf="sortState$ | async as sortState">
-    <thead class="table-header">
-        <!-- First column for drag handle -->
-        <th></th>
+    <table class="table">
+        <thead class="table-header">
+            <!-- First column for drag handle -->
+            <th></th>
 
-        <th *ngFor="let column of columns">
-            <div class="header-cell-content">
-                {{ column.name }}
-                <button title="Sort {{column.name}}" class="sort-toggle" [ngClass]="{
+            <th *ngFor="let column of columns">
+                <div class="header-cell-content">
+                    {{ column.name }}
+                    <button title="Sort {{column.name}}" class="sort-toggle" [ngClass]="{
               'sort-asc':
-                sortState.column.accessor === column.accessor &&
-                sortState.sortDirection === 'ASC',
+                tableState.sort.column.accessor === column.accessor &&
+                tableState.sort.sortDirection === 'ASC',
               'sort-desc':
-                sortState.column.accessor === column.accessor &&
-                sortState.sortDirection === 'DESC'
-            }" (click)="toggleSort(column, sortState)"></button>
-            </div>
-        </th>
-    </thead>
+                tableState.sort.column.accessor === column.accessor &&
+                tableState.sort.sortDirection === 'DESC'
+            }" (click)="toggleSort(column, tableState.sort, tableState)"></button>
+                </div>
+            </th>
+        </thead>
 
-    <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropRow($event)">
-        <tr class='table-row' cdkDrag *ngFor="
-          let datum of data
-            | sort: sortState
-            | search: (searchString$ | async):searchByFields
+        <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropRow($event, tableState)">
+            <tr class='table-row' cdkDrag *ngFor="
+          let datum of tableState.data
+            | sort: tableState.sort
+            | search: tableState.searchString:searchByFields
         ">
-            <td cdkDragHandle>
-                <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="1.5" cy="1.5" r="1.5" fill="currentColor" />
-                    <circle cx="7.5" cy="1.5" r="1.5" fill="currentColor" />
-                    <circle cx="1.5" cy="6.5" r="1.5" fill="currentColor" />
-                    <circle cx="7.5" cy="6.5" r="1.5" fill="currentColor" />
-                    <circle cx="1.5" cy="11.5" r="1.5" fill="currentColor" />
-                    <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor" />
-                </svg>
-            </td>
-            <td *ngFor="let column of columns">
-                {{ datum[column.accessor] }}
-            </td>
-        </tr>
-    </tbody>
-</table>
+                <td cdkDragHandle>
+                    <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="1.5" cy="1.5" r="1.5" fill="currentColor" />
+                        <circle cx="7.5" cy="1.5" r="1.5" fill="currentColor" />
+                        <circle cx="1.5" cy="6.5" r="1.5" fill="currentColor" />
+                        <circle cx="7.5" cy="6.5" r="1.5" fill="currentColor" />
+                        <circle cx="1.5" cy="11.5" r="1.5" fill="currentColor" />
+                        <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor" />
+                    </svg>
+                </td>
+                <td *ngFor="let column of columns">
+                    {{ datum[column.accessor] }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ng-container>

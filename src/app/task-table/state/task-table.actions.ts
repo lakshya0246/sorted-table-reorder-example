@@ -10,9 +10,4 @@ export const fetchTasksFinished = createAction(
   props<{ tasks: TaskType[] }>()
 );
 
-export const reorderTasks = createAction(
-  '[Tasks] Reorder Tasks Local',
-  props<ReorderTableEvent>()
-);
-
 export const fetchTasksFailed = createAction('[Tasks] Fetch Failed');

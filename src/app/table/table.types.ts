@@ -3,11 +3,19 @@ export type TableSort = 'ASC' | 'DESC' | undefined;
 export interface TableSortState {
   column: TableColumn;
   sortDirection: TableSort;
+  customSorting: {
+    applied: boolean;
+    /**
+     * State of date before applying custom sort, reverts back to this when custom sort cleared
+     */
+    masterList: any[];
+  };
 }
 
 export interface TableState {
   sort: TableSortState;
   searchString: string;
+  data: any[];
 }
 
 export interface TableColumnBase {

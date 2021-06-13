@@ -5,11 +5,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss'],
 })
-export class TagComponent implements OnInit {
+export class TagComponent {
   @Input() title: string = '';
   @Output() remove: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit(): void {}
 }

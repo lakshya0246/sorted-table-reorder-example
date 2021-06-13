@@ -39,13 +39,4 @@ export class TaskTableComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(TaskTableActions.fetchTasks());
   }
-
-  reorderRows(event: ReorderTableEvent): void {
-    this.store.dispatch(
-      TaskTableActions.reorderTasks({
-        previousIndex: event.previousIndex,
-        currentIndex: event.currentIndex,
-      })
-    );
-  }
 }

@@ -3,9 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -18,6 +20,7 @@ import {
   TableColumn,
   TableSort,
   TableSortState,
+  TableState,
 } from './table.types';
 
 @Component({
@@ -25,20 +28,11 @@ import {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnDestroy {
-  sortState$: Observable<TableSortState> = this.store
-    .select((state) => state.table.sort)
-    .pipe(
-      tap(
-        (sortState) => (this.hasSorting = sortState.sortDirection !== undefined)
-      )
-    );
-  searchString$: Observable<string> = this.store
-    .select((state) => state.table.searchString)
-    .pipe(tap((searchString) => (this.hasSearch = searchString !== '')));
+export class TableComponent implements OnDestroy, OnChanges {
+  tableState$: Observable<TableState> = this.store.select(
+    (state) => state.table
+  );
 
-  private hasSearch: boolean = false;
-  private hasSorting: boolean = false;
   private searchEventsSubject = new Subject<string>();
   private debouncedSearchEvents$ = this.searchEventsSubject
     .asObservable()
@@ -52,13 +46,20 @@ export class TableComponent implements OnDestroy {
    */
   @Input() columns: TableColumn[] = [];
   @Input() searchByFields: string[] = [];
-  @Output() reorderRows = new EventEmitter<ReorderTableEvent>();
 
   constructor(private store: Store<AppState>) {
     this.searchEventsSubscription = this.debouncedSearchEvents$.subscribe(
       (searchString) =>
         this.store.dispatch(TableActions.filterBySearch({ searchString }))
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.data) {
+      this.store.dispatch(
+        TableActions.setData({ data: changes.data.currentValue })
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -82,7 +83,22 @@ export class TableComponent implements OnDestroy {
   /**
    * Cycles through sort states
    */
-  toggleSort(column: TableColumn, previousSort: TableSortState) {
+  toggleSort(
+    column: TableColumn,
+    previousSort: TableSortState,
+    tableState: TableState
+  ) {
+    if (tableState.sort.customSorting.applied) {
+      this.store.dispatch(
+        UtilsActions.pushToast({
+          title: 'Custom ordering cannot be applied with sorting',
+          callbackTitle: 'Clear ordering',
+          callback: () =>
+            this.store.dispatch(TableActions.clearCustomSorting()),
+        })
+      );
+      return;
+    }
     if (previousSort.column.accessor === column.accessor) {
       if (previousSort.sortDirection === 'DESC') {
         this.clearSorting();
@@ -98,17 +114,16 @@ export class TableComponent implements OnDestroy {
     this.store.dispatch(TableActions.clearSorting());
   }
 
-  dropRow(event: CdkDragDrop<any[]>) {
-    if (this.hasSorting) {
-      this.store.dispatch(
-        UtilsActions.pushToast({
-          title: 'Cannot reorder when rows are sorted',
-          callbackTitle: 'Clear Sorting',
-          callback: () => this.store.dispatch(TableActions.clearSorting()),
-        })
-      );
-      return;
-    } else if (this.hasSearch) {
+  clearCustomSorting() {
+    this.store.dispatch(TableActions.clearCustomSorting());
+  }
+
+  dropRow(event: CdkDragDrop<any[]>, tableState: TableState) {
+    const hasSort = tableState.sort.sortDirection !== undefined;
+    const hasSearch = tableState.searchString !== '';
+    const hasCustomSort = tableState.sort.customSorting.applied;
+
+    if (hasSearch) {
       this.store.dispatch(
         UtilsActions.pushToast({
           title: 'Cannot reorder when rows are filtered by search',
@@ -118,9 +133,22 @@ export class TableComponent implements OnDestroy {
       );
       return;
     }
-    this.reorderRows.emit({
-      previousIndex: event.previousIndex,
-      currentIndex: event.currentIndex,
-    });
+
+    if (hasSort && !hasCustomSort) {
+      this.store.dispatch(
+        TableActions.branchToCustomOrderOnReorder({
+          currentIndex: event.currentIndex,
+          previousIndex: event.previousIndex,
+        })
+      );
+      return;
+    }
+
+    this.store.dispatch(
+      TableActions.reorderRows({
+        currentIndex: event.currentIndex,
+        previousIndex: event.previousIndex,
+      })
+    );
   }
 }

@@ -1,5 +1,4 @@
 <div class="task-table-container">
-    <awesome-table title='Tasks' (reorderRows)="reorderRows($event)"
-        [searchByFields]="[COLUMN_ACCESSORS.TITLE,COLUMN_ACCESSORS.ASSIGNED_TO]" [columns]='TABLE_COLUMNS'
-        [data]="tasksAsTableData$ | async"></awesome-table>
+    <awesome-table title='Tasks' [searchByFields]="[COLUMN_ACCESSORS.TITLE,COLUMN_ACCESSORS.ASSIGNED_TO]"
+        [columns]='TABLE_COLUMNS' [data]="tasksAsTableData$ | async"></awesome-table>
 </div>
