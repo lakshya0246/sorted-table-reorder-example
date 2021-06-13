@@ -71,38 +71,13 @@
 .cdk-drag-placeholder {
     opacity: 0.3;
     pointer-events: none;
-    border: 1px solid $hot-orange;
 }
-.cdk-drag-preview {
-    // TODO: convert to mixin
-    display: grid;
-    border-radius: 8px;
-    grid-template-columns: 40px repeat(auto-fit, minmax(120px, 1fr));
-    box-shadow: 1px 1px 14px 0px rgba(0, 0, 0, 0.12), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-    height: 36px;
-    & td {
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-start;
-        height: 100%;
-        background: white;
-        font-size: 14px;
-        font-weight: 500;
-        color: $grey-7;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        padding-right: 8px;
-    }
 
-    & td:first-child {
-        border-radius: 8px 0 0 8px;
-        padding-left: 16px;
-    }
-    & td:last-child {
-        margin-right: 0;
-        border-radius: 0 8px 8px 0;
-        padding-right: 16px;
+.cdk-drag-preview {
+    border-radius: 8px;
+    border: 2px solid $hot-orange;
+    & td {
+        display: none;
     }
 }
 

@@ -30,7 +30,6 @@
     </thead>
 
     <tbody cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropRow($event)">
-        <div class="cdk-drag-placeholder" *cdkDragPlaceholder></div>
         <tr class='table-row' cdkDrag *ngFor="
           let datum of data
             | sort: sortState
