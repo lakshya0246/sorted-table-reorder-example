@@ -28,6 +28,21 @@ function compareAlphanumeric(
 }
 
 /**
+ * @returns localCompare of a and b
+ */
+function compareAlphanumeric2(
+  a: string | number,
+  b: string | number,
+  sortDirection: TableSort
+) {
+  let direction = 1;
+  if (sortDirection === 'DESC') {
+    direction = -1;
+  }
+  return a.toString().localeCompare(b.toString()) * direction;
+}
+
+/**
  * @returns -1 if `b` greater than `a`, 1 if `a` greater than `b`
  */
 function compareDatetime(a: Date, b: Date, sortDirection: TableSort) {
@@ -56,7 +71,7 @@ export class SortPipe implements PipeTransform {
     ) {
       if (sortConfig.column.sortType === 'alphanumeric') {
         return [...value].sort((a, b) =>
-          compareAlphanumeric(
+          compareAlphanumeric2(
             a[sortConfig.column.accessor],
             b[sortConfig.column.accessor],
             sortConfig.sortDirection
