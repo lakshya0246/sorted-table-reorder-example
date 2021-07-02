@@ -10,6 +10,10 @@
       {
         "source": "table-project",
         "destination": "table-project/index.html"
+      },
+      {
+        "source": "better-nested-selector",
+        "destination": "better-nested-selector/index.html"
       }
     ]
   }

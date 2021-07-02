@@ -4,10 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /table-project/ --deploy-url /table-project/",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "deploy": "ng build --base-href /table-project/ --deploy-url /table-project/ && firebase deploy"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
