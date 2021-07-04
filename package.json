@@ -1,10 +1,10 @@
 {
-  "name": "table-project",
+  "name": "table-sort-test",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href /table-project/ --deploy-url /table-project/",
+    "build": "ng build --base-href /table-sort-test/ --deploy-url /table-sort-test/ && node postBuild",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

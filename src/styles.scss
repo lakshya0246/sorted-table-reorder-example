@@ -5,3 +5,27 @@ body {
     background: $grey-075;
     font-family: "Barlow", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+.article-container {
+    max-width: 70ch;
+    padding: 12px;
+}
+
+h1.article-title {
+    font-size: xxx-large;
+    line-height: 130%;
+    color: darken($hot-orange, 10%);
+    font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+}
+
+section.article-description {
+    color: rgb(73, 73, 73);
+    line-height: 140%;
+    font-size: medium;
+    font-family: "Open Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}

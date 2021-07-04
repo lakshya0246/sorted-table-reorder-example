@@ -1,4 +1,16 @@
-<div class="task-table-container">
-    <awesome-table title='Tasks' [searchByFields]="[COLUMN_ACCESSORS.TITLE,COLUMN_ACCESSORS.ASSIGNED_TO]"
-        [columns]='TABLE_COLUMNS' [data]="tasksAsTableData$ | async"></awesome-table>
+<div class="article-container">
+    <h1 class="article-title">User-reordering of a sorted table</h1>
+    <section class="article-description">
+        I’ve come across a lot of products with tables/lists which do not allow the user to reorder the list except when
+        a
+        sorting has been applied. This PoC presents a possible solution for those scenarios. Users can essentially start
+        with a
+        sorted list, and then “branch off” to a custom order. For the user, this functionality (starting with a sorted
+        list)
+        makes creating custom orderings easier than starting off with an unsorted one. Users can obviously be allowed to
+        save a
+        number of these custom states.
+    </section>
 </div>
+<awesome-table title='Tasks' [searchByFields]="[COLUMN_ACCESSORS.TITLE,COLUMN_ACCESSORS.ASSIGNED_TO]"
+    [columns]='TABLE_COLUMNS' [data]="tasksAsTableData$ | async"></awesome-table>
